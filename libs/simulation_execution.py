@@ -26,7 +26,8 @@ class SimulationExecutor():
         self.heap_queue = []
 
     def run_simulation(self) -> None:
-        """_summary_
+        """
+        Method to execute the simulation
 
         Args:
             trucks (list[Truck]): _description_
