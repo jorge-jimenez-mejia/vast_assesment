@@ -22,7 +22,6 @@ class TruckDataCollection:
     completed_trips: int = 0
     traveling_time: int = 0
     unloading_time: int = 0
-    idle_time: int = 0
     mining_time: list[float] = field(default_factory=list)
 
 class Truck:
@@ -43,6 +42,12 @@ class Truck:
 ############################### Truck Actions ###############################
 
     def mine(self, mining_time: int) -> None:
+        """
+            Method to change to Mining state
+
+        Args:
+            mining_time (int): time taken to mine
+        """
 
         self.loaded = True
         self.travel_done = False
@@ -51,6 +56,9 @@ class Truck:
         self.truck_data.mining_time.append(mining_time)
 
     def travel(self) -> None:
+        """
+            Method to change to travel state
+        """
 
         self.travel_done = True
 
@@ -58,6 +66,9 @@ class Truck:
         self.truck_data.traveling_time += 30 # min
 
     def unload(self) -> None:
+        """
+            Method to change to unloading state
+        """
         self.travel_done = False
         self.loaded = False
         self.unloading_site = 0
@@ -69,29 +80,41 @@ class Truck:
 ############################### get Truck states ###############################
 
     def ready_to_mine(self) -> bool:
+        """
+            Method to check if truck is ready for mine state
+
+        Returns:
+            bool: true to read, false for not ready
+        """
 
         return (not self.loaded and self.travel_done)
 
     def ready_to_travel(self) -> bool:
+        """
+            Method to check if truck is ready for travel state
+
+        Returns:
+            bool: true to read, false for not ready
+        """
 
         return not self.travel_done
 
     def arrived_at_unload_station(self) -> bool:
+        """
+            Method to check if truck arrived at mining unload state
+
+        Returns:
+            bool: true to read, false for not ready
+        """
 
         return self.loaded and self.travel_done
 
     def done_unloading(self) -> bool:
-
-        return (not self.loaded and not self.travel_done)
-
-############################### generic functions ###############################
-
-    def get_data(self) -> TruckDataCollection:
         """
-            Method to get truck data
+            Method to check if truck is done unloading
 
         Returns:
-            TruckDataCollection: truck data collections object
+            bool: true to read, false for not ready
         """
 
-        return self.truck_data
+        return (not self.loaded and not self.travel_done)

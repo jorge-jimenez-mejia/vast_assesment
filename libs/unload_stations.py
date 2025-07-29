@@ -16,6 +16,5 @@ class UnloadStation:
     free_at_time: int = 0
     idle_time: int = 0
     total_unloads: int = 0
-    utilized_time: int = 0
     max_queue_length: int = 0
     queue: list[Truck] = field(default_factory=list)
