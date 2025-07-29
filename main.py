@@ -6,15 +6,17 @@ Created on July 27th, 2026
 
 import sys
 import os
+import time
 import argparse
 import textwrap
-import random
+from libs.truck import TruckDataCollection
+from libs.truck import Truck
+from libs.unload_stations import UnloadStation
+from libs.simulation_execution import SimulationExecutor
+from libs.data_process import SimDataProcess
+from libs.logger_lib import logger
 
-from truck import Truck, TruckDataCollection
-from unload_stations import UnloadStation
-from simulation_execution import run_simulation
-
-SIMULATION_TIME: int = 72 # hours
+SIMULATION_TIME: int = 72*60 # hours
 USE_STRING: str = """USAGE:
 python3 main.py -n <number of mining trucks> -m <number of mining unload stations>
             """
@@ -46,12 +48,25 @@ def main(number_trucks: int, number_stations: int) -> None:
     trucks: list[Truck] = [Truck(i) for i in range(1, number_trucks+1)]
 
     # initialize unloading stations
-    stations: list[Truck] = [UnloadStation for _ in range(number_stations)]
+    stations: list[UnloadStation] = [UnloadStation(identification=i+1) for i in range(number_stations)]
+
+    for station in stations:
+        station.queue = []
 
     # run simulation
-    run_simulation(trucks=trucks,
-                   stations=stations,
-                   simulation_time=SIMULATION_TIME)
+    sim_obj: SimulationExecutor = SimulationExecutor(trucks=trucks,
+                                                 stations=stations,
+                                                 simulation_time=SIMULATION_TIME)
+    sim_obj.run_simulation()
+
+    print("simulation ended")
+
+
+    # get data
+    data_objects: list[TruckDataCollection] = [truck.truck_data for truck in trucks]
+    process_object: SimDataProcess = SimDataProcess(data_objects)
+    process_object.process()
+    process_object.get_total_minutes_driving()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog=os.path.basename(__file__),
@@ -66,4 +81,7 @@ if __name__ == "__main__":
         print("Ensure that -n and -m parameters are passed")
         sys.exit(-1)
 
+    start_time = time.time()
     main(number_trucks=args.trucks, number_stations=args.stations)
+    print(f"Execution time: {time.time()-start_time}")
+    
