@@ -1,0 +1,15 @@
+# python ignore
+__pycache__/
+__init__.py
+
+# ignore vscode
+.vscode/
+*.code-workspace
+
+# Virtual environments ignore
+venv/
+ENV/
+env/
+.venv/
+.env/
+
