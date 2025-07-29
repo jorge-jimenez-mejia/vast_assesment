@@ -39,3 +39,23 @@ and track efficiency of mining trucks and unloads stations over a continuous 72-
 ## How to Run
 
 1. python3 main.py -n {number of mining trucks} -m {number of mining unload stations} [-v {print stats}]
+
+
+---
+
+## TO-DO
+
+### Inputs:
+- inlcude handeling for error cases (negative numberr inputs for -n/-m)
+- Stress testing (memory performance when one station to huge number of trucks)
+
+### Simulations:
+- deadlocks (checking for empty queues at beginging of while loop)
+- low stations and many trucks cause huge load on queue object in station, implement different queue or limit on queues
+- select queue's in better method
+
+### Data Processing:
+- Edge cases for potential calculations of divisible by zero
+- checking for empty data write to CSV
+- handeling disk full errors
+## Generated Stats
