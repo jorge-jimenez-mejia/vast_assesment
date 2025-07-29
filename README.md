@@ -38,4 +38,4 @@ and track efficiency of mining trucks and unloads stations over a continuous 72-
 
 ## How to Run
 
-1. python3 main.py -n <number of mining trucks> -m <number of mining unload stations> [-v <print stats>]
+1. python3 main.py -n {number of mining trucks} -m {number of mining unload stations} [-v {print stats}]
