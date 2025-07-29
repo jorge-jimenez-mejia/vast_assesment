@@ -1,4 +1,4 @@
-# Truck Loading & Unloading Simulation
+# Vast Helium-3 Simulation
 
 This project simulates a lunar Helium-3 space mining operation. This simulation will manage
 and track efficiency of mining trucks and unloads stations over a continuous 72-hour operation
